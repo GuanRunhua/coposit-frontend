@@ -1,19 +1,14 @@
 import { useQuery } from '@pankod/refine-core';
 import { Autocomplete, TextField, CircularProgress } from '@pankod/refine-mui';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { GetCountries, ICountry } from '../services/get-country.api';
-import { proxy, useSnapshot } from 'valtio';
+
 import { artistsQueryState } from '../list';
 export const CountryAutoComplete = () => {
   const [open, setOpen] = useState(false);
-  const snap = useSnapshot(artistsQueryState);
-  const {
-    isLoading,
-    isError,
-    data = [],
-    error,
-  } = useQuery<ICountry[]>({
+
+  const { isLoading, data = [] } = useQuery<ICountry[]>({
     queryKey: ['getCountries'],
     queryFn: () => GetCountries(),
   });

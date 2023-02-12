@@ -15,11 +15,10 @@ import {
 import { useState } from 'react';
 
 export const ArtistTracks = () => {
-  // const [artist, setArtist] = useState("");
   const param = useParams();
   const id = param.id;
   const [page, setPage] = useState(0);
-  const { isLoading, isError, data, error } = useQuery<ITopTracks>({
+  const { isLoading, data } = useQuery<ITopTracks>({
     queryKey: ['topTracks', id, page],
     queryFn: () => GetTopTrackByMbid(id || '', page + 1),
   });
