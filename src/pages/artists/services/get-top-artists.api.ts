@@ -7,6 +7,9 @@ async function GetTopArtists(country: string, page = 1, pageSize = 5) {
     country,
   });
   const response = await fetch(`${baseAPIUrl}/last-fm/artists?${params}`);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
   return response.json();
 }
 

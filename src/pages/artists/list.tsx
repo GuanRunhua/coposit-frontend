@@ -1,4 +1,4 @@
-import { useQuery } from '@pankod/refine-core';
+import { HttpError, useQuery } from '@pankod/refine-core';
 import { ITopartists } from './interfaces/top-aritists.interface';
 import {
   Avatar,
@@ -26,6 +26,7 @@ import { proxy, useSnapshot } from 'valtio';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ArtTrackIcon from '@mui/icons-material/ArtTrack';
 import numeral from 'numeral';
+import { ErrorPage } from '../../commons/components/ErrorPage/ErrorPage';
 
 export const artistsQueryState = proxy({ country: 'Australia' });
 
@@ -34,7 +35,7 @@ export const ArtistsList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const snap = useSnapshot(artistsQueryState);
 
-  const { data } = useQuery<ITopartists>({
+  const { data, refetch, isError, error } = useQuery<ITopartists, HttpError>({
     queryKey: ['artists', page, rowsPerPage, snap.country],
     queryFn: () => GetTopArtists(snap.country, page + 1, rowsPerPage),
   });
@@ -48,6 +49,9 @@ export const ArtistsList = () => {
     setPage(0);
   };
 
+  if (isError) {
+    return <ErrorPage title='500' message={error?.message} buttonFn={refetch} buttonText='Refresh' />;
+  }
   return (
     <>
       <Grid container spacing={2}>
