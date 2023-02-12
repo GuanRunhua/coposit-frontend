@@ -1,8 +1,17 @@
 import { useQuery } from '@pankod/refine-core';
-import { useLocation, useParams } from '@pankod/refine-react-router-v6';
+import { useParams } from '@pankod/refine-react-router-v6';
 import { ITopTracks } from './interfaces/top-tracks.interface';
 import { GetTopTrackByMbid } from './services/get-top-tracks-by-mbid.api';
-import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Pagination, Typography } from '@pankod/refine-mui';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Pagination,
+  Typography,
+  CircularProgress,
+} from '@pankod/refine-mui';
 import { useState } from 'react';
 
 export const ArtistTracks = () => {
@@ -16,7 +25,10 @@ export const ArtistTracks = () => {
   });
 
   const artist = data?.track?.[0]?.artist.name;
-  console.log(page);
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
   return (
     <>
       <List
