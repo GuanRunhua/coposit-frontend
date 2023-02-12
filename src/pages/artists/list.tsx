@@ -26,12 +26,10 @@ import { proxy, useSnapshot } from 'valtio';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ArtTrackIcon from '@mui/icons-material/ArtTrack';
 import numeral from 'numeral';
-export const artistsQueryState = proxy({ country: 'Australia' });
-export const ArtistsList = () => {
-  //   const { data, isLoading, isError } = useList<ITopartists, HttpError>({
-  //     resource: 'last-fm/artists',
 
-  //  });
+export const artistsQueryState = proxy({ country: 'Australia' });
+
+export const ArtistsList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const snap = useSnapshot(artistsQueryState);
